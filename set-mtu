@@ -4,7 +4,7 @@ cat > /usr/local/bin/set-mtu.sh <<'EOF'
 # 会在网络启动后执行，确保 eth0 已上线
 
 IFACE="eth0"
-MTU="1400"
+MTU="1420"
 
 # 等待接口可用
 for i in {1..10}; do
