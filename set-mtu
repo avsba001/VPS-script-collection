@@ -1,0 +1,44 @@
+cat > /usr/local/bin/set-mtu.sh <<'EOF'
+#!/bin/bash
+# 自动设置 MTU 为 1400（安全版本）
+# 会在网络启动后执行，确保 eth0 已上线
+
+IFACE="eth0"
+MTU="1400"
+
+# 等待接口可用
+for i in {1..10}; do
+    if ip link show "$IFACE" &>/dev/null; then
+        ip link set dev "$IFACE" mtu "$MTU"
+        echo "$(date '+%F %T') [OK] 已将 $IFACE MTU 设置为 $MTU" >> /var/log/mtu.log
+        exit 0
+    fi
+    sleep 2
+done
+
+echo "$(date '+%F %T') [ERR] 接口 $IFACE 未找到，未修改 MTU" >> /var/log/mtu.log
+exit 1
+EOF
+
+# 授权执行
+chmod +x /usr/local/bin/set-mtu.sh
+
+# 创建 systemd 服务文件
+cat > /etc/systemd/system/set-mtu.service <<'EOF'
+[Unit]
+Description=Set MTU safely after network is up
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/set-mtu.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 启用并立即执行
+systemctl daemon-reload
+systemctl enable --now set-mtu.service
