@@ -13,8 +13,9 @@ net.ipv4.tcp_max_tw_buckets = 32768
 net.ipv4.tcp_sack = 1
 net.ipv4.tcp_fack = 0
 
+#net.ipv4.tcp_rmem = 4096 87380 2949120
 net.ipv4.tcp_rmem = 4096 87380 2949120
-net.ipv4.tcp_wmem = 4096 65536 1415577
+net.ipv4.tcp_wmem = 4096 65536 2949120
 net.ipv4.tcp_mtu_probing = 1
 net.ipv4.tcp_congestion_control = bbr
 net.ipv4.tcp_notsent_lowat = 4096
