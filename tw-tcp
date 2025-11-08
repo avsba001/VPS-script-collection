@@ -11,10 +11,10 @@ net.ipv4.tcp_fin_timeout = 10
 net.ipv4.tcp_slow_start_after_idle = 0
 net.ipv4.tcp_max_tw_buckets = 32768
 net.ipv4.tcp_sack = 1
-net.ipv4.tcp_fack = 1
+net.ipv4.tcp_fack = 0
 
 net.ipv4.tcp_rmem = 4096 87380 2949120
-net.ipv4.tcp_wmem = 4096 65536 1969151
+net.ipv4.tcp_wmem = 4096 65536 1415577
 net.ipv4.tcp_mtu_probing = 1
 net.ipv4.tcp_congestion_control = bbr
 net.ipv4.tcp_notsent_lowat = 4096
